@@ -1,0 +1,21 @@
+[Unit]
+Description=KaliMcp - Kali Linux MCP Server
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/KaliMcp
+Environment=PATH=/opt/KaliMcp/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/opt/KaliMcp/.venv/bin/kalimcp serve --host 0.0.0.0 --port 8443
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Security hardening
+NoNewPrivileges=false
+ProtectSystem=false
+
+[Install]
+WantedBy=multi-user.target

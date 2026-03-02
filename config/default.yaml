@@ -1,0 +1,48 @@
+server:
+  host: "0.0.0.0"
+  port: 8443
+  workers: 4
+  reload: false
+
+auth:
+  enabled: true
+  api_keys:
+    - key: "CHANGE_ME_GENERATE_WITH_secrets_token_urlsafe_32"
+      name: "default"
+      scopes: ["read", "execute", "admin"]
+  jwt_secret: null
+  jwt_algorithm: "HS256"
+
+security:
+  max_requests_per_minute: 60
+  max_concurrent_processes: 10
+  command_timeout: 300
+  session_timeout: 1800
+  max_sessions: 20
+  max_output_bytes: 5000000
+  max_argument_length: 4096
+  blocked_commands:
+    - "rm -rf /"
+    - "mkfs"
+    - "dd if=/dev/zero"
+    - ":(){:|:&};:"
+  enable_shell_listener: true
+  enable_high_risk_tools: false
+  enable_install_deps: false
+  allowed_listener_ports: [4444, 4445, 4446, 4447, 4448, 4449, 4450]
+  allowed_listener_addresses: ["127.0.0.1", "0.0.0.0"]
+  target_whitelist: []
+
+workspace:
+  root: "/opt/kalimcp/workspace"
+  max_file_size_mb: 50
+
+logging:
+  audit_log: "/var/log/kalimcp/audit.log"
+  level: "INFO"
+  max_audit_size_mb: 100
+
+tls:
+  enabled: false
+  cert_file: null
+  key_file: null

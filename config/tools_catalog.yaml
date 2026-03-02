@@ -1,0 +1,494 @@
+# KaliMcp Tool Catalog — 12 categories following Kali menu structure
+# Each tool: name, category, description, risk_level (low/medium/high), allowed (bool)
+
+categories:
+  recon:
+    label: "信息收集 / Reconnaissance"
+    description: "Network scanning, OSINT, DNS enumeration"
+  vuln:
+    label: "漏洞分析 / Vulnerability Analysis"
+    description: "Vulnerability scanners and analyzers"
+  webapp:
+    label: "Web 应用测试 / Web Application Testing"
+    description: "Web vulnerability scanners, fuzzers, directory bruteforce"
+  password:
+    label: "密码攻击 / Password Attacks"
+    description: "Password cracking, brute-force, wordlist generation"
+  wireless:
+    label: "无线攻击 / Wireless Attacks"
+    description: "Wi-Fi cracking and monitoring"
+  exploit:
+    label: "漏洞利用 / Exploitation"
+    description: "Exploit frameworks and search"
+  sniff:
+    label: "嗅探欺骗 / Sniffing & Spoofing"
+    description: "Packet capture, ARP spoofing, traffic analysis"
+  post:
+    label: "后渗透 / Post-Exploitation"
+    description: "Privilege escalation, lateral movement, persistence"
+  forensic:
+    label: "取证分析 / Forensics"
+    description: "Disk, memory, and file forensics"
+  social:
+    label: "社会工程 / Social Engineering"
+    description: "Phishing, pretexting toolkits"
+  crypto:
+    label: "密码学 / Cryptography"
+    description: "Hash identification and cryptanalysis"
+  reverse:
+    label: "逆向工程 / Reverse Engineering"
+    description: "Disassemblers, debuggers, decompilers"
+
+tools:
+  # ── Recon ──────────────────────────────────────────
+  - name: nmap
+    category: recon
+    description: "Network exploration and port scanner"
+    risk_level: low
+    allowed: true
+    default_args_template: "-sV -T4 {target}"
+
+  - name: whois
+    category: recon
+    description: "Domain/IP registration lookup"
+    risk_level: low
+    allowed: true
+    default_args_template: "{target}"
+
+  - name: dig
+    category: recon
+    description: "DNS lookup utility"
+    risk_level: low
+    allowed: true
+    default_args_template: "{target} ANY"
+
+  - name: theHarvester
+    category: recon
+    description: "E-mail, subdomain, and name harvester"
+    risk_level: low
+    allowed: true
+    default_args_template: "-d {target} -b all"
+
+  - name: amass
+    category: recon
+    description: "In-depth attack surface mapping and asset discovery"
+    risk_level: low
+    allowed: true
+    default_args_template: "enum -d {target}"
+
+  - name: fierce
+    category: recon
+    description: "DNS reconnaissance tool for locating non-contiguous IP space"
+    risk_level: low
+    allowed: true
+    default_args_template: "--domain {target}"
+
+  - name: dmitry
+    category: recon
+    description: "Deepmagic information gathering tool"
+    risk_level: low
+    allowed: true
+    default_args_template: "-winsepfb {target}"
+
+  - name: enum4linux
+    category: recon
+    description: "Windows/Samba enumeration tool"
+    risk_level: low
+    allowed: true
+    default_args_template: "-a {target}"
+
+  - name: dnsrecon
+    category: recon
+    description: "DNS enumeration script"
+    risk_level: low
+    allowed: true
+    default_args_template: "-d {target}"
+
+  - name: masscan
+    category: recon
+    description: "Fast TCP port scanner"
+    risk_level: medium
+    allowed: true
+    default_args_template: "-p1-65535 --rate=1000 {target}"
+
+  # ── Vulnerability Analysis ────────────────────────
+  - name: nikto
+    category: vuln
+    description: "Web server vulnerability scanner"
+    risk_level: medium
+    allowed: true
+    default_args_template: "-h {target}"
+
+  - name: openvas
+    category: vuln
+    description: "Open Vulnerability Assessment Scanner"
+    risk_level: medium
+    allowed: true
+    default_args_template: ""
+
+  - name: legion
+    category: vuln
+    description: "Automatic network penetration testing framework"
+    risk_level: medium
+    allowed: true
+    default_args_template: ""
+
+  - name: lynis
+    category: vuln
+    description: "Security auditing tool for Unix/Linux"
+    risk_level: low
+    allowed: true
+    default_args_template: "audit system"
+
+  - name: wpscan
+    category: vuln
+    description: "WordPress security scanner"
+    risk_level: medium
+    allowed: true
+    default_args_template: "--url {target}"
+
+  # ── Web Application Testing ───────────────────────
+  - name: sqlmap
+    category: webapp
+    description: "Automatic SQL injection and database takeover"
+    risk_level: high
+    allowed: true
+    default_args_template: "-u {target} --batch"
+
+  - name: gobuster
+    category: webapp
+    description: "Directory/file & DNS busting tool"
+    risk_level: medium
+    allowed: true
+    default_args_template: "dir -u {target} -w /usr/share/wordlists/dirb/common.txt"
+
+  - name: dirb
+    category: webapp
+    description: "Web content scanner"
+    risk_level: medium
+    allowed: true
+    default_args_template: "{target}"
+
+  - name: wfuzz
+    category: webapp
+    description: "Web application fuzzer"
+    risk_level: medium
+    allowed: true
+    default_args_template: "-c -z file,/usr/share/wordlists/dirb/common.txt --hc 404 {target}/FUZZ"
+
+  - name: zaproxy
+    category: webapp
+    description: "OWASP ZAP — web app security scanner"
+    risk_level: medium
+    allowed: true
+    default_args_template: ""
+
+  - name: burpsuite
+    category: webapp
+    description: "Web vulnerability scanner (community edition)"
+    risk_level: medium
+    allowed: true
+    default_args_template: ""
+
+  - name: whatweb
+    category: webapp
+    description: "Web technology identifier"
+    risk_level: low
+    allowed: true
+    default_args_template: "{target}"
+
+  - name: ffuf
+    category: webapp
+    description: "Fast web fuzzer"
+    risk_level: medium
+    allowed: true
+    default_args_template: "-u {target}/FUZZ -w /usr/share/wordlists/dirb/common.txt"
+
+  # ── Password Attacks ──────────────────────────────
+  - name: john
+    category: password
+    description: "John the Ripper password cracker"
+    risk_level: high
+    allowed: true
+    default_args_template: "{target}"
+
+  - name: hashcat
+    category: password
+    description: "Advanced password recovery"
+    risk_level: high
+    allowed: true
+    default_args_template: "-m 0 {target} /usr/share/wordlists/rockyou.txt"
+
+  - name: hydra
+    category: password
+    description: "Network logon cracker"
+    risk_level: high
+    allowed: true
+    default_args_template: "-l admin -P /usr/share/wordlists/rockyou.txt {target} ssh"
+
+  - name: medusa
+    category: password
+    description: "Speedy, massively parallel, modular, login brute-forcer"
+    risk_level: high
+    allowed: true
+    default_args_template: "-h {target} -u admin -P /usr/share/wordlists/rockyou.txt -M ssh"
+
+  - name: cewl
+    category: password
+    description: "Custom wordlist generator from web content"
+    risk_level: low
+    allowed: true
+    default_args_template: "{target}"
+
+  - name: crunch
+    category: password
+    description: "Wordlist generator"
+    risk_level: low
+    allowed: true
+    default_args_template: ""
+
+  # ── Wireless Attacks ──────────────────────────────
+  - name: aircrack-ng
+    category: wireless
+    description: "802.11 WEP/WPA key cracking"
+    risk_level: high
+    allowed: true
+    default_args_template: ""
+
+  - name: wifite
+    category: wireless
+    description: "Automated wireless attack tool"
+    risk_level: high
+    allowed: true
+    default_args_template: ""
+
+  - name: kismet
+    category: wireless
+    description: "Wireless network sniffer and IDS"
+    risk_level: medium
+    allowed: true
+    default_args_template: ""
+
+  - name: reaver
+    category: wireless
+    description: "WPS brute force attack tool"
+    risk_level: high
+    allowed: true
+    default_args_template: ""
+
+  # ── Exploitation ──────────────────────────────────
+  - name: msfconsole
+    category: exploit
+    description: "Metasploit Framework console"
+    risk_level: high
+    allowed: true
+    default_args_template: ""
+
+  - name: searchsploit
+    category: exploit
+    description: "Exploit-DB command-line search"
+    risk_level: low
+    allowed: true
+    default_args_template: "{target}"
+
+  - name: msfvenom
+    category: exploit
+    description: "Metasploit payload generator"
+    risk_level: high
+    allowed: true
+    default_args_template: ""
+
+  # ── Sniffing & Spoofing ──────────────────────────
+  - name: tshark
+    category: sniff
+    description: "Terminal-based Wireshark"
+    risk_level: medium
+    allowed: true
+    default_args_template: "-i eth0 -c 100"
+
+  - name: ettercap
+    category: sniff
+    description: "Comprehensive suite for MITM attacks"
+    risk_level: high
+    allowed: true
+    default_args_template: ""
+
+  - name: bettercap
+    category: sniff
+    description: "Network attack and monitoring framework"
+    risk_level: high
+    allowed: true
+    default_args_template: ""
+
+  - name: responder
+    category: sniff
+    description: "LLMNR/NBT-NS/mDNS poisoner"
+    risk_level: high
+    allowed: true
+    default_args_template: ""
+
+  - name: tcpdump
+    category: sniff
+    description: "Command-line packet analyzer"
+    risk_level: low
+    allowed: true
+    default_args_template: "-i eth0 -c 50"
+
+  # ── Post-Exploitation ────────────────────────────
+  - name: mimikatz
+    category: post
+    description: "Windows credential extraction"
+    risk_level: high
+    allowed: true
+    default_args_template: ""
+
+  - name: bloodhound
+    category: post
+    description: "Active Directory relationship mapper"
+    risk_level: high
+    allowed: true
+    default_args_template: ""
+
+  - name: empire
+    category: post
+    description: "Post-exploitation framework"
+    risk_level: high
+    allowed: true
+    default_args_template: ""
+
+  - name: linpeas
+    category: post
+    description: "Linux privilege escalation checker"
+    risk_level: medium
+    allowed: true
+    default_args_template: ""
+
+  - name: pspy
+    category: post
+    description: "Unprivileged Linux process snooping"
+    risk_level: low
+    allowed: true
+    default_args_template: ""
+
+  # ── Forensics ────────────────────────────────────
+  - name: autopsy
+    category: forensic
+    description: "Digital forensics platform"
+    risk_level: low
+    allowed: true
+    default_args_template: ""
+
+  - name: volatility
+    category: forensic
+    description: "Memory forensics framework"
+    risk_level: low
+    allowed: true
+    default_args_template: ""
+
+  - name: binwalk
+    category: forensic
+    description: "Firmware analysis tool"
+    risk_level: low
+    allowed: true
+    default_args_template: "{target}"
+
+  - name: foremost
+    category: forensic
+    description: "File carving tool"
+    risk_level: low
+    allowed: true
+    default_args_template: "-i {target}"
+
+  - name: exiftool
+    category: forensic
+    description: "Read/write metadata in files"
+    risk_level: low
+    allowed: true
+    default_args_template: "{target}"
+
+  - name: steghide
+    category: forensic
+    description: "Steganography tool"
+    risk_level: low
+    allowed: true
+    default_args_template: "info -sf {target}"
+
+  # ── Social Engineering ───────────────────────────
+  - name: setoolkit
+    category: social
+    description: "Social-Engineer Toolkit (SET)"
+    risk_level: high
+    allowed: true
+    default_args_template: ""
+
+  - name: gophish
+    category: social
+    description: "Phishing campaign framework"
+    risk_level: high
+    allowed: true
+    default_args_template: ""
+
+  # ── Cryptography ─────────────────────────────────
+  - name: hashid
+    category: crypto
+    description: "Identify hash types"
+    risk_level: low
+    allowed: true
+    default_args_template: "{target}"
+
+  - name: hash-identifier
+    category: crypto
+    description: "Hash type identifier"
+    risk_level: low
+    allowed: true
+    default_args_template: ""
+
+  - name: rsatool
+    category: crypto
+    description: "RSA key analysis"
+    risk_level: low
+    allowed: true
+    default_args_template: ""
+
+  # ── Reverse Engineering ──────────────────────────
+  - name: ghidra
+    category: reverse
+    description: "NSA reverse engineering framework"
+    risk_level: low
+    allowed: true
+    default_args_template: ""
+
+  - name: radare2
+    category: reverse
+    description: "Reverse engineering framework"
+    risk_level: low
+    allowed: true
+    default_args_template: "{target}"
+
+  - name: gdb
+    category: reverse
+    description: "GNU Debugger"
+    risk_level: low
+    allowed: true
+    default_args_template: "{target}"
+
+  - name: objdump
+    category: reverse
+    description: "Display information from object files"
+    risk_level: low
+    allowed: true
+    default_args_template: "-d {target}"
+
+  - name: strace
+    category: reverse
+    description: "Trace system calls and signals"
+    risk_level: low
+    allowed: true
+    default_args_template: "{target}"
+
+  - name: ltrace
+    category: reverse
+    description: "Library call tracer"
+    risk_level: low
+    allowed: true
+    default_args_template: "{target}"
